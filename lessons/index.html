@@ -10,6 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <!-- This is linking the JavaScript file containing lessons data -->
     <script src="lessons.js"></script>
-    </head>
-    
-    </html>
+</head>
+
+<body>
+    <!-- Vue.js app container -->
+    <!--creating a new vue instance with the element named as app -->
+    <div id="app"> <!--anchor point for Vue.js to mount and control the application-->
+        <main> <!--main content of my web page-->
+
+            <!-- Display site name using mustache syntax-->
+            <h1>{{sitename}}</h1>
+            <!--syntax for data binding (dynamically updates when value of 'sitename' variable changes)-->
+        </main>
+    </div>
+</body>
+
+</html>
