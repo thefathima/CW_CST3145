@@ -36,6 +36,18 @@
          <!--<option> Elements: are individual options within the dropdown. -->
          <!--Each option has a value attribute representing the sorting attribute, and the text content inside the <option> tag is what the user sees in the dropdown menu.-->
      </select>
+
+      <!-- Dropdown for selecting sorting order -->
+            <!---->
+            <label for="sortOrder">Order:</label>
+
+            <!-- v-model="sortOrder" establishes a two-way binding between the dropdown and the data in the Vue instance-->
+            <select v-model="sortOrder" id="sortOrder">
+                <!--Ascending" is chosen, lessons will be sorted from the smallest to the largest-->
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+                <!--user selects an option, the sortOrder variable is updated with the chosen value.-->
+            </select>
 </main>
 </body>
 
