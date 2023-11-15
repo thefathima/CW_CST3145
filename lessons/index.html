@@ -48,6 +48,23 @@
                 <option value="desc">Descending</option>
                 <!--user selects an option, the sortOrder variable is updated with the chosen value.-->
             </select>
+             <!--SEARCH BAR-->
+            <!--(type="text"): This sets the input field to accept text-->
+            <input type="text" v-model="searchQuery" placeholder="Search lessons">
+            <!--v-model="searchQuery": establishes a two-way binding between the input field and the searchQuery variable in the Vue instance-->
+            <!--As the user types into the search bar, the searchQuery variable is automatically updated with the input.-->
+
+
+            <!-- SHOPPING CART BUTTON -->
+            <!--(v-on:click='toggleCart') Vue.js directive - listens for a click event
+            When the button is clicked, it triggers the toggleCart method in the Vue instance.-->
+            <button v-on:click='toggleCart' :disabled="cart.length === 0">
+                <!--(disabled="cart.length === 0") Vue.js directive - for dynamic attribute binding
+            disables button if the condition cart.length === 0 evaluates to true. (if the shopping cart is empty, the button is disabled; otherwise, it's enabled)-->
+                {{cartItemCount}}
+                <!--computed property in the Vue instance that dynamically calculates and updates the number of items in the shopping cart.-->
+                <span class="fas fa-cart-plus"></span> Shopping Cart
+            </button>
 </main>
 </body>
 
