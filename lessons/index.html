@@ -65,6 +65,40 @@
                 <!--computed property in the Vue instance that dynamically calculates and updates the number of items in the shopping cart.-->
                 <span class="fas fa-cart-plus"></span> Shopping Cart
             </button>
+
+             <!--LESSON DISPLAY-->
+
+            <!--(<div v-if='showProduct'>) Vue.js directive used for conditional rendering-->
+                <div v-if='showProduct'> <!--inside data object if showProduct=true then all lessons are displayed-->
+
+                    <!-- Display lessons -->
+                    <div class="lessons-container"> <!--hold and structure the display of lessons (CSS file)-->
+    
+    
+                        <!-- DISPLAY EACH LESSON (LOOP THROUGH) -->
+    
+                        <!--(v-for) creating a loop that goes through each lesson in the filteredLessons array.-->
+                        <div v-for="lesson in filteredLessons" class="lesson-box">
+    
+                            <!-- Lesson details -->
+                            <h2>{{ lesson.name }}</h2>
+
+    
+    
+                            <!--LOCATION/PRICE/AVAILABILITY DETAILS-->
+    
+                            <!--Vue.js expressions enclosed in double curly braces ({{ }}), and they are used for data binding-->
+                            <!-- these expressions are replaced with the actual values from the Vue instance's data.-->
+                            <p>Location: {{ lesson.location }}</p>
+                            <!--{{lesson.location}} replaced with the value of the location property of the lesson object-->
+                            <p>Price: {{ lesson.price }} AED</p>
+                            <!--{{lesson.price}} replaced with the value of the price property of the lesson object followed by AED-->
+                            <p>Availability: {{ lesson.availability }} spaces</p>
+                            <!--{{lesson.availability}} replaced with the value of the availability property of the lesson object followed by spaces-->
+    
+    
+                            <!-- DISPLAY STAR RATING BASED ON LESSON RATING -->
+                            <div>
 </main>
 </body>
 
