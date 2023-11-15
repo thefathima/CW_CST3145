@@ -104,7 +104,14 @@
     
     
                             <!-- DISPLAY STAR RATING BASED ON LESSON RATING -->
-                            <div>
+                                <div>
+                                    <!--if lesson.rating is 3, it will generate three filled stars.-->
+                                    <span v-for="n in lesson.rating" class="star">★</span>
+        
+                                    <!--it calculates the number of empty stars needed by subtracting lesson.rating from 5-->
+                                    <!--eg: if lesson.rating is 3, it will generate two empty stars to complete the total of five stars-->
+                                    <span v-for="n in 5 - lesson.rating" class="star">☆</span>
+                                </div>
 </main>
 </body>
 
