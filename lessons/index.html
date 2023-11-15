@@ -21,8 +21,22 @@
             <!-- Display site name using mustache syntax-->
             <h1>{{sitename}}</h1>
             <!--syntax for data binding (dynamically updates when value of 'sitename' variable changes)-->
-        </main>
-    </div>
+    
+     <!-- Label for the sort dropdown -->
+     <label for="sortAttribute">Sort by:</label>
+
+     <!-- Dropdown for selecting sorting attribute -->
+     <!--v-model="sortattribute" is a vue.js directive - it creates 2 way binding b/w sortAttribute in data & select element-->
+     <!--if the user selects an option, sortAttribute in my Vue.js instance will be updated, and vice versa-->
+     <select v-model="sortAttribute" id="sortAttribute">
+         <option value="name">Subject</option>
+         <option value="location">Location</option>
+         <option value="price">Price</option>
+         <option value="availability">Spaces</option>
+         <!--<option> Elements: are individual options within the dropdown. -->
+         <!--Each option has a value attribute representing the sorting attribute, and the text content inside the <option> tag is what the user sees in the dropdown menu.-->
+     </select>
+</main>
 </body>
 
 </html>
