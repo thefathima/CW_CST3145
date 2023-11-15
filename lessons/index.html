@@ -82,7 +82,13 @@
     
                             <!-- Lesson details -->
                             <h2>{{ lesson.name }}</h2>
-
+    
+                            <!-- Display lesson image -->
+                            <!-- v-bind used for binding attributes to expressions. (Binds src attribute of the <img> element to the value of lesson.image.-->
+                            <!-- inside the loop so it iterates through the whole loop -->
+                            <figure>
+                                <img v-bind:src="lesson.image" style="height:250px; width:250px">
+                            </figure>
     
     
                             <!--LOCATION/PRICE/AVAILABILITY DETAILS-->
