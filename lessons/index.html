@@ -112,7 +112,221 @@
                                     <!--eg: if lesson.rating is 3, it will generate two empty stars to complete the total of five stars-->
                                     <span v-for="n in 5 - lesson.rating" class="star">☆</span>
                                 </div>
-</main>
-</body>
+  <!-- ADD TO CART BUTTON -->
+                        <!--(v-on) listenS for a click event on the button. When the button is clicked, it triggers the addToCart method-->
+                        <button v-on:click='addToCart(lesson)' :disabled="!canAddToCart(lesson)">
+                            <!--(disabled) dynamic binding that sets the button to a disabled state based on the result of the canAddToCart method-->
+                            <!--if canAddToCart = false then button is disabled, if true = enabled-->
+                            Add to Cart
+                        </button>
 
+                        <!--DISPLAY OUT OF STOCK MSG IF AVAILABILITY/SPACES = 0 -->
+
+                        <!--(v-if)checks whether the availability property of the current lesson is equal to 0, if true "out of stock" displayed-->
+                        <span v-if="lesson.availability === 0" class="out-of-stock">Out of stock</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--IF SHOPPING CART IS NOT EMPTY: -->
+            <div v-else>
+                <!-- Display shopping cart or checkout -->
+                <div class="cart-container">
+                    <!-- Display 'Shopping Cart' or 'Checkout' based on cart status -->
+                    <h2>{{ cart.length > 0 ? 'Shopping Cart' : 'Checkout' }}</h2>
+                    <!--cart.length > 0 is true) tht means If there are items in the cart , it shows "Shopping Cart"; otherwise, it shows "Checkout"-->
+
+                    <!--(v-if) checks if cart is empty, if empty it displays msg below-->
+                    <div v-if="cart.length === 0">
+                        <!-- Display message if the shopping cart is empty -->
+                        <p>Your shopping cart is empty.</p>
+                    </div>
+
+                    <!--if the shopping cart is NOT empty: -->
+                    <div v-else>
+                        <!-- Display items in the shopping cart -->
+                        <!--(v-for) iterates over each item in the cart array-->
+                        <div v-for="cartLesson in cart" class="cart-item">
+                            <h3>{{ cartLesson.name }}</h3>
+                            <!-- Display price and button to remove from Cart -->
+                            <p>Price: {{ cartLesson.price }} AED</p>
+
+                            <!--when clicked, triggers the removeFromCart method with the current cartLesson as an argument-->
+                            <button v-on:click="removeFromCart(cartLesson)">Remove from Cart</button>
+                        </div>
+                    </div>
+
+                    <!--CHECKOUT PAGE-->
+                    <!--checks if the length of the cart array is greater than 0-->
+                    <!--If true, the content inside this <div> will be displayed - indicating that there are items in the shopping cart-->
+                    <div v-if="cart.length > 0">
+
+                        <!-- Order information -->
+                        <h2>Order Information</h2>
+                        <p>
+                            <strong>Full Name:</strong> <!--bold text-->
+
+                            <!-- Input for user's full name -->
+                            <!--(v-module) two-way binding on an input element-->
+                            <!-- It binds the input field value to a property in my Vue instance's data-->
+                            <input v-model.trim="order.fullName" @input="validateFullName" />
+                            <!--(.trim)trims input (unintentional whitespaces are removed)-->
+                            <!--(order) = object in your Vue instance's data & (fullName) = property of the order object-->
+                            <!--user types or modifies the input, the validateFullName method is called.-->
+
+
+                            <!-- Validation message for full name -->
+                            <!--if validFullName is false (indicating invalid full name) and order.fullName is not an empty string.-->
+                            <span v-if="!validFullName && order.fullName !== ''" class="validation-error">Please enter a
+                                valid full name with letters only.</span>
+                        </p>
+
+                        <p>
+                            <strong>Phone Number:</strong>
+                            <!-- Input for user's phone number -->
+                            <input v-model="order.phone" @input="validatePhone" />
+                            <!-- Validation message for phone number -->
+                            <span v-if="!validPhone && order.phone !== ''" class="validation-error">Please enter a valid
+                                phone number.</span>
+                        </p>
+
+                        <!-- Place Order button -->
+                        <button v-on:click="submitForm" :disabled="!validOrderInfo">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Vue.js script -->
+    <script type="text/javascript">
+        var webstore = new Vue({
+            el: '#app', //creating a new vue instance with the element named as app
+            data: {
+                // Site name mounting the app
+                sitename: "After School Lessons",
+                // Contains an array of lesson data
+                lessons: lessons,
+                // Flag to toggle between lesson display and shopping cart/checkout (flag is like a switch: when its true then it displays lessons, when its false = checkout page)
+                showProduct: true,
+                // Array to store items in the cart
+                cart: [],
+                // Attribute to sort lessons by (default: Name of Subject)
+                sortAttribute: "name",
+                // Order to sort lessons (default: Ascending)
+                sortOrder: "asc",
+                // Order information (full name, phone)
+                order: {
+                    fullName: '', //input shud be empty, the textbox shouldnt have anything in it obviously
+                    phone: '',
+
+                },
+
+                // Validation flags for full name and phone number
+                validFullName: false,
+                validPhone: false,
+
+                // User input for lesson search
+                searchQuery: '', //its empty bc when u type it will check each character, checks the input
+            },
+            methods: {
+                // Add lesson to the cart
+                addToCart: function (lesson) {
+                    if (lesson.availability > 0) {
+                        this.cart.push(lesson);
+                        lesson.availability--;
+                    }
+                },
+                // Toggle between lesson display and shopping cart/checkout
+                toggleCart() {
+                    this.showProduct = !this.showProduct;
+                },
+                // Check if lesson can be added to the cart
+                canAddToCart: function (lesson) {
+                    return lesson.availability > 0;
+                },
+                // Remove lesson from the cart
+                removeFromCart: function (lesson) {
+                    const index = this.cart.indexOf(lesson);
+                    if (index !== -1) {
+                        this.cart.splice(index, 1);
+                        lesson.availability++;
+                    }
+                },
+                // Validate full name using regex
+                validateFullName() {
+                    // allows only letters (both uppercase and lowercase) and spaces
+                    const regex = /^[A-Za-z\s]+$/;
+                    this.validFullName = regex.test(this.order.fullName);
+                },
+                // Validate phone number using regex
+                validatePhone() {
+                    // Regular expression for allowing only digits (0-9)
+                    const regex = /^[0-9]*$/;
+                    // Testing if the phone number matches the regex pattern
+                    //if validPhone is true = indicates that phone number follows the regex pattern.
+                    this.validPhone = regex.test(this.order.phone);
+                    //regex test is assigned to the validPhone property of the Vue instance's data.
+                },
+                // Submit order form
+                submitForm() {
+                    alert('Order Submitted!');
+                    this.cart = [];
+                    this.order = {
+                        fullName: '',
+                        phone: '',
+
+                    };
+                },
+            },
+            computed: {
+                // Calculate the number of items in the cart
+                cartItemCount: function () {
+                    return this.cart.length || '';
+                },
+                // Check if order information is valid
+                validOrderInfo: function () {
+                    return this.validFullName && this.validPhone;
+                },
+                // Sort and filter lessons based on user input
+                sortedLessons: function () {
+                    // Sorting logic for lessons
+                    const attribute = this.sortAttribute; //sorting by name, under the data
+                    const order = this.sortOrder === "asc" ? 1 : -1; //1 is ascending, -1 is descending
+
+                    return this.lessons.slice(0).sort((a, b) => { //slice of 0 = starts traversing (going thru each letter of the alphabet one by one) from the first letter of name
+                        //a and b r two random variables I've declared
+                        let aValue = a[attribute]; //taking one alphabet letter and compared it with the other
+                        let bValue = b[attribute];
+
+                        if (typeof aValue === "string") { //checking the type of value is entered as the variable, if its a string force it to be lowercase
+                            aValue = aValue.toLowerCase(); //aValue is converted to lower case (if it is string)
+                            bValue = bValue.toLowerCase(); //to make the comparison more accurate, both the variables r lowercase (cz lower case has different values and uppercase have different values)
+                        }
+
+                        if (aValue > bValue) { //if aValue is bigger than bValue
+                            return order; //then it is shown in ascending 
+                        } else if (aValue < bValue) { //if aValue is smaller than bValue
+                            return -order; //then it is shown in descending order
+                        }
+
+                        return 0; //ends the function
+                    });
+                },
+                // Unique Search function for "Search as you type"
+                filteredLessons: function () {
+                    const query = this.searchQuery.toLowerCase();
+                    if (!query) return this.sortedLessons; // If the query is empty, return all lessons
+
+                    return this.sortedLessons.filter(lesson => {
+                        const lessonName = lesson.name.toLowerCase();
+                        const lessonLocation = lesson.location.toLowerCase();
+
+                        return lessonName.includes(query) || lessonLocation.includes(query);
+                    });
+                },
+            },
+        });
+    </script>
+</body>
 </html>
