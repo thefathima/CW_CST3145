@@ -4,7 +4,7 @@ let lessons = [ //an array of lessons with various attributes (JSON objects)
         "location": "Dubai Marina",
         "price": 20,
         "availability": 5,
-        "image": "images/history.png",
+        "image": "../images/history.png",
         "rating": 4,
     },
     {
