@@ -60,20 +60,11 @@ let lessons = [ //an array of lessons with various attributes (JSON objects)
         "location": "Dubai Internet City",
         "price": 60,
         "availability": 5,
-        "image": "images/robotic.png",
+        "image": "./images/robotic.png",
         "rating": 5,
     },
     {
         "name": "Economics",
-        "location": "Dubai Media City",
-        "price": 70,
-        "availability": 5,
-        "image": "images/economics.png",
-        "rating": 4,
-    },
-
-    {
-        "name": "Psycho",
         "location": "Dubai Media City",
         "price": 70,
         "availability": 5,
