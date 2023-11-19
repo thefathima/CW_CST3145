@@ -12,7 +12,7 @@ let lessons = [ //an array of lessons with various attributes (JSON objects)
         "location": "Palm Jumeirah",
         "price": 10,
         "availability": 5,
-        "image": "images/globe.gif",
+        "image": "images/globee.JPG",
         "rating": 3,
     },
     {
