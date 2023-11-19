@@ -297,9 +297,9 @@
                 submitForm() {
                     alert('Order Submitted!');
                     // clears the shopping cart, indicating that the order has been successfully submitted 
-                    this.cart = []; 
+                    this.cart = [];
                     ////clears the user's input for full name and phone number after the order has been submitted.
-                    this.order = { 
+                    this.order = {
                         fullName: '',
                         phone: '',
 
@@ -314,7 +314,7 @@
                     //(this.cart.length) represents the number of items in the shopping cart.
                     // if (this.cart.length) has a value other than 0 = computed property returns the actual length
                     // If (this.cart.length) is 0 = it returns an empty string ('')
-                    return this.cart.length || ''; 
+                    return this.cart.length || '';
                 },
 
                 // Check if order information is valid
@@ -354,17 +354,36 @@
                     });
                 },
 
-                
+
                 // Unique Search function for "Search as you type"
                 filteredLessons: function () {
+                    //(this.searchQuery)refers to the user's input in the search bar.
+                    // It's a property in the Vue instance's data, representing the text that the user has entered for searching lessons.
+                    //(toLowerCase) JavaScript string method that converts all the characters in a string to lowercase.
+                    //By applying toLowerCase() to this.searchQuery, the user's input is converted to lowercase characters.
+                    //The result of this.searchQuery.toLowerCase() is stored in the variable query.
+                    //So, (query) now holds the lowercase version of the user's search input.
                     const query = this.searchQuery.toLowerCase();
+
+                    //(!query) NOT operator used - checks if the user's search query is an empty string.
+                    //If the condition !query is true, indicating that the search query is empty, the computed property returns all lessons without filtering.
+                    //in this case - it returns the result of (this.sortedLessons), which is the array of lessons sorted based on the user's sorting preferences.               
+                    //helps to avoid unnecessary filtering when the user hasn't initiated a search. It ensures that, by default, all lessons are displayed when there's no specific search criteria.
                     if (!query) return this.sortedLessons; // If the query is empty, return all lessons
 
+                    //(.filter) method is an array method in JavaScript - creates a new array containing elements from the original array 
+                    //(lesson =>) arrow function takes each element of this.sortedLessons as lesson and executes the code within the curly braces.
                     return this.sortedLessons.filter(lesson => {
+                        // each lesson, it retrieves the name  and converts them to lowercase using toLowerCase().
                         const lessonName = lesson.name.toLowerCase();
+                        // each lesson, it retrieves the location and converts them to lowercase using toLowerCase().
                         const lessonLocation = lesson.location.toLowerCase();
 
+                        //checks whether either the lesson name or the lesson location includes the search query.
+                        //it returns true if the search query is found within the lesson name or location.
                         return lessonName.includes(query) || lessonLocation.includes(query);
+                        //resulting array from this filter operation represents lessons that match the user's search criteria.
+                        //This array is then used to dynamically display only the relevant lessons on the website based on the user's input.
                     });
                 },
             },
