@@ -76,7 +76,7 @@ let lessons = [ //an array of lessons with various attributes (JSON objects)
         "location": "Rashidiya",
         "price": 90,
         "availability": 5,
-        "image": "images/coding.png",
+        "image": "images/codez.JPG",
         "rating": 5,
     },
     {
