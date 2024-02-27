@@ -10,6 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <!-- This is linking the JavaScript file containing lessons data -->
     <script src="lessons.js"></script>
+    <link rel="manifest" href="lessonsApp.webmanifest">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        };
+    </script>
 </head>
 
 <body>
